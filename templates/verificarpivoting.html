@@ -8,7 +8,7 @@
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">Verificacion de Servidor</h1>
+                        <h1 class="page-head-line">Verificacion de Pivoting</h1>
                         <h1 class="page-subhead-line"> </h1>
 
                     </div>
@@ -16,11 +16,39 @@
                 <!-- /. ROW  -->
                 <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
+               <div class="panel panel-info">
+                        <div class="panel-heading">
+                           Verificacion de Pivoting
+                        </div>
+                        <div class="panel-body">
+                            <form action="/pivoting/" method="post"> 
+                                        <div class="form-group">
+                                            <label>Digite url  con el siguiente formato http://dominio.com/ o  http://sandbox1.ufps.edu.co:8080/ufps_19-proyectoAn/ (Esta prueba puede tardar un momento)</label>
+                                            <input class="form-control" type="text" name='server'>
 
 
 
 
- {% if error  %} 
+                                            {% csrf_token %}
+                  <input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
+                                        </div>
+                                 
+                                  {{error}}
+                                 
+                                        <button type="submit" class="btn btn-info">Verificar </button>
+
+                                    </form>
+                            </div>
+                        </div>
+                            </div>
+
+       
+             <!--/.ROW-->
+            
+
+            </div>
+            <!-- /. PAGE INNER  -->
+            {% if error  %} 
 
 
 
@@ -82,40 +110,6 @@
                         </div>
                     </div>
                     {% endif%}
-            
-               <div class="panel panel-info">
-                        <div class="panel-heading">
-                           Verificacion de Pivoting
-                        </div>
-                        <div class="panel-body">
-                            <form action="/pivoting/" method="post"> 
-                                        <div class="form-group">
-                                            <label>Digite url  con el siguiente formato http://dominio.com/ o  http://sandbox1.ufps.edu.co:8080/ufps_19-proyectoAn/ (Esta prueba puede tardar un momento)</label>
-                                            <input class="form-control" type="text" name='server'>
-
-
-
-
-                                            {% csrf_token %}
-                  <input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
-                                        </div>
-                                 
-                                  {{error}}
-                                 
-                                        <button type="submit" class="btn btn-info">Verificar </button>
-
-                                    </form>
-                            </div>
-                        </div>
-                            </div>
-
-       
-             <!--/.ROW-->
-            
-
-            </div>
-            <!-- /. PAGE INNER  -->
-           
                             </div>
                             </div>
                           </div>
@@ -147,9 +141,8 @@
          </div>
          
          <div class = "modal-body">
-            No te preocupes muchas aplicaciones  sufren de falta validaciones de informacion  XSS es uno de los ataques 
-            con mas hisotrias en los temas de seguridad , lo importante es poder corregir esos errores  siguiendo nuestra guia
-
+            Saber que otras aplicaciones estan corriendo en el mismo segmento de red de mi servidor es importante por que me puede ayudar a evitar
+            afectaciones a "ciegas" debido a que ocurren por afectacion de un servidor ajeno pero al final compromete la seguridad total de tu aplicacion
             Ahora porfavor elige una de las opciones siguientes
             <a href="info" class="btn btn-success" >Solucionar el problema</a> 
            

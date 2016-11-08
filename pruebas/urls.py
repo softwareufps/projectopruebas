@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^sqli/$',views.vistasqli),
+    url(r'^sqli/info/$',views.infosqlinction),
     url(r'^xss/$',views.vistaxss),
     url(r'^server/$',views.vistaserver),
     url(r'xss/rexss/$',views.vistainfosqli),
@@ -29,7 +30,8 @@ urlpatterns = [
     url(r'pivoting/info/$',views.infopivoting),
     url(r'^links/$',views.vistalinkscaidos),
     url(r'^server/info/$', views.infoserver),
-    url(r'^$', views.vistaxss),
+    url(r'^$', views.inicio),
     url(r'^links/info/$',views.infolinks),
+
 
 ]

@@ -1,0 +1,125 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{%block verificar %}
+
+   <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+            
+
+                        <h1 class="page-head-line">Informacion XSS</h1>
+                       
+
+
+
+  
+                       
+
+                      <h1 class="text-success" >Pagina Escaneada:</h1> <h3 class="text-success">{{url}}</h3>
+                     <h1 class="text-muted" >Vulnerable</h1>   <h3 class="text-muted">{{vulnerable}}</h3>
+
+                       
+
+
+
+
+                        {%if errorserver %}
+
+<p class="text-center">Porcentaje de afectacion</p>
+        <div class="progress progress-striped active">
+  <div class="progress-bar" role="progressbar"
+       aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100"
+       style="width: 55%">
+
+   <p>Tu aplicacion puede verse afectada en un 50%  debido a que genera solo errores y genero un error http</p>
+  </div>
+</div>
+
+{%elif vulnerable == "is vulnerable" %}
+
+
+<div class="progress progress-striped active">
+  <div class="progress-bar" role="progressbar"
+       aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100"
+       style="width: 80%">
+   <p>Tu aplicacion puede verse afectada en un 80% debido aque se inyecta codigo </p>
+  </div>
+</div>
+
+{%else%}
+<p>Tu aplicacion es segura y no sufre ningun daño</p>
+
+<div class="progress progress-striped active">
+  <div class="progress-bar" role="progressbar"
+       aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100"
+       style="width: 0%">
+   <p>Tu aplicacion puede verse afectada en un 0%</p>
+  </div>
+</div>
+
+{%endif%}
+
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+               
+            <!-- /. PAGE INNER  -->
+
+
+
+             <div class="row">
+                  {% for x in variable %}
+                             
+                <div class="col-md-6 col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                         Defincion de {{x.tipoataque}}
+                        </div>
+                        <div class="panel-body">
+                            {{x.definicion|safe}}
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                    Como funciona
+                        </div>
+                        <div class="panel-body">
+                        {{x.comofunciona|safe}}
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+          
+               
+                <div class="col-md-6 col-sm-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                           como evitarlo 
+                        </div>
+                        <div class="panel-body">
+                            <p>{{x.comoevitarlo}}</p>
+                        </div>
+                       
+                    </div>
+                </div>
+          
+
+       
+   
+   
+                            {%endfor%}
+            
+        </div>
+
+{%endblock verificar %}

@@ -18,10 +18,19 @@ from appsoft.models import tipo,ataque,aprobo
 
 
 
+def inicio(request):
+	pagina="index.html"
+	return render(request,pagina)
+
+
+	
+
 def vistasqli(request):
 	
 	pagina="verificarsqli.html"
 	creado=""
+	resultado={}
+	url=""
 
 	if request.method == "POST": 
 		url=request.POST['sqli']
@@ -35,14 +44,47 @@ def vistasqli(request):
 			creado=sqliattack(url)
 		else:
 			
-			creado=sqlconsession(urlsesion,url,user,password)
-			
+			resultado=sqlconsession(urlsesion,url,user,password)
+			creado=resultado.get('vulnerable')
+			errorhttp500=resultado.get("http500")
+
+		
+		request.session['vulnerable']=creado
+		request.session['urlatacada']=url
+		request.session['http500']=errorhttp500
 			
 
 
 	else:
 		creado=""	
-	return render(request, pagina,{"error":creado})
+	return render(request, pagina,{"error":creado,"resultado":resultado, "url":url})
+
+
+
+def infosqlinction(request):
+	pagina="infosqli.html"
+	vulnerable=""
+	urlafectada=""
+	error=""
+	info=None
+
+	try:
+		vulnerable=request.session.get('vulnerable')
+		urlafectada=request.session.get('urlatacada')
+		info=ataque.objects.filter(id=1)
+		error=request.session.get("http500")
+
+		del request.session["vulnerable"]
+		del request.session["urlatacada"]
+		del request.session["http500"]
+
+	except:
+		return redirect('/sqli')
+
+
+	return render(request,pagina,{"vulnerable":vulnerable, "url":urlafectada, "errorserver":error,"variable":info})
+
+
 
 
 
@@ -171,17 +213,19 @@ def vistapivoting(request):
 			#eliminamos el ultimo que es le porcentaje para que no se pinte
 			objeto=result[len(result)-1]
 			result.remove(objeto)
+			print "el porcentaje es "+ str(objeto)
 		else:
 			creado="not vulnerable"
 
 
 		request.session["iprevisada"]=result[0]
 		request.session["vulpivoting"]=creado
+		request.session["porcentaje"]=objeto
 	else:
 		creado=""
 
 
-	return render(request,pagina,{"resultado":result,"error":creado,"porcentaje":objeto})
+	return render(request,pagina,{"resultado":result,"error":creado})
 
 
 
@@ -190,14 +234,16 @@ def infopivoting(request):
 	try:
 		ip=request.session.get("iprevisada")
 		vulnerable=request.session.get("vulpivoting")
+		porcentaje=request.session["porcentaje"]
 		del request.session["iprevisada"]
 		del request.session["vulpivoting"]
+		del request.session["porcentaje"]
 		sqli=ataque.objects.filter(id=3)
 
 	except:
 		 return redirect('/pivoting')
 
-	return render(request,pagina,{"vulnerable":vulnerable, "ip":ip,"variable":sqli})
+	return render(request,pagina,{"vulnerable":vulnerable, "ip":ip,"variable":sqli,"porcentaje":porcentaje})
 
 
 def vistalinkscaidos(request):
@@ -313,36 +359,39 @@ def sqliattack(fullurl):
 
 
 
-
+resultado={}
 def sqlconsession(urlsession,urlinjectar,user,password):
 	
 
 #es para iniciar sesion
-	variables=nomvars()
+	variables=nomvars(urlsession)
 	
 
 	http = httplib2.Http()
 
 	
-	body = {'email': 'gg@gmail.com', 'password': '1234567890'}
+	body = {variables[0]: user, variables[1]: password}
 	headers = {'Content-type': 'application/x-www-form-urlencoded'}
 	response, content = http.request(urlsession, 'POST', headers=headers, body=urllib.urlencode(body))
 
 	headers = {'Cookie': response['set-cookie']}
 
-  	fullurl=urlinjectar+"=1\' or \'1\' = \'1\''"
-	response, content = http.request("http://sandbox1.ufps.edu.co:8080/ufps_19-proyectoAn/buscarReserva.jsp?cc=1\' or \'1\' = \'1\''", 'GET', headers=headers)
+  	fullurl=urlinjectar+"='"
+	response, content = http.request(fullurl, 'GET', headers=headers)
 	fullbody= str(content)
-	if "HTTP 500" in fullbody:
-		return "is vulnerable"
+	print "html :    "+fullbody
+	if "500" in fullbody:
+
+		resultado["vulnerable"]='is vulnerable'
+		resultado["http500"]="error 500"
 
 	if "You have an error in your SQL syntax" in fullbody:
-		return ('is vulnerable') 
+		resultado["vulnerable"]='is vulnerable'
 	else :
 		http = httplib2.Http()
 
 	
-		body = {'email': 'gg@gmail.com', 'password': '1234567890'}
+		body = {variables[0]: user, variables[1]: password}
 		headers = {'Content-type': 'application/x-www-form-urlencoded'}
 		response, content = http.request(urlsession, 'POST', headers=headers, body=urllib.urlencode(body))
 
@@ -351,13 +400,20 @@ def sqlconsession(urlsession,urlinjectar,user,password):
 		response, content = http.request(fullurl, 'GET', headers=headers)
 		fullbody= str(content)
 		if "The used SELECT statements have a different number of column" in fullbody:
-			return "is vulnerable"
+			resultado["vulnerable"]='is vulnerable'
 
 		elif "HTTP 500" in fullbody:
-			return 'is vulnerable'
+			resultado["vulnerable"]='is vulnerable'
+			resultado["http500"]="error 500"
 	
-		return 'not vulnerable'
+		vul=resultado.get('vulnerable')
+		if vul:
+			resultado["vulnerable"]='is vulnerable'
+		else:
 
+			resultado["vulnerable"]='notvulnerable'
+
+		return resultado
 	
 
 resultxss={}

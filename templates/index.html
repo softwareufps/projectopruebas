@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{%block verificar %}
+
+   <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">Bienvenido al software de pruebas</h1>
+                        <h1 class="page-subhead-line"> </h1>
+
+                    </div>
+                </div>
+
+
+
+       <!-- /. PAGE INNER  -->
+            
+
+
+
+
+
+
+
+                <!-- /. ROW  -->
+                <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+               <div class="panel panel-info">
+                        <div class="panel-heading">
+              Informacion
+                        </div>
+                        <div class="panel-body">
+
+                        <blockquote>
+  <p><b>Realizado con la tecnologias de:</b> Python 2.7 -  Django 1.9 , sqlite3</p>
+  <p><b>Desplegado en:</b> Heroku</p>
+  <p><b>Adicional:</b> Este software busca permitir a los desarrolladores  realizar pruebas en todas sus fases e iteraciones creando una  ideologia de 
+  desarrollo seguro , tambien busca aplicar pruebas  de usabilidad como la de enocntrar algun link o enlace roto  para prevenir  entregas con estas pequeñas fallas pero que dan una mala imagen </p>
+  <p><b>Manual de usuario:</b> Para sacar el mayor provecho a la aplicacion le dejamos un enlace par acceder a la documentacion   <a href="https://drive.google.com/open?id=0Bxm3n1bcC3P9a1JXM1J6Zmo5MFU">Click aqui</a></p>
+
+  <p><b>Sandbox:</b> Las url proporcionadas por sandbox tienen un diferenciacion a una url del comun , este software  tiene en cuenta este tipo de url y se ha modificado para aceptarlas</p>
+   <p><b> Creado por:</b> Jairo Castañeda - Edinson Caicedo - Diana villamizar  </p>
+
+   <p><a href="/info" class="btn btn-danger" data-toggle = "modal" data-target = "#myModal">Mas informacion</a></p>
+</blockquote>
+                         
+                        </div>
+                            </div>
+
+       
+             <!--/.ROW-->
+
+
+
+            
+
+            </div>
+
+
+
+
+
+                                      <div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" 
+   aria-labelledby = "myModalLabel" aria-hidden = "true">
+   
+   <div class = "modal-dialog">
+      <div class = "modal-content">
+         
+         <div class = "modal-header">
+            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
+                  &times;
+            </button>
+            
+            <h4 class = "modal-title" id = "myModalLabel">
+           Mas informacion
+            </h4>
+         </div>
+         
+         <div class = "modal-body">
+         <p><b>Por que python?</b> Python es un lenguaje de programacion realmente potente y permite realizar tareas que pueden
+         llegar a ser tediosas en otros lenguajes sumandole que tiene una gran comunidad trabajando en el  resolviendo y creando nuevas librerias
+         que permiten realizar las  tareas de manera mas sencilla</p>
+
+         <p><b>Django</b> Es un framework que nos has permitido  trabajar de una manera rapida , organizada y potente dandonos la ventaja de
+         el procesamiento  factor determinante para este software</p>
+
+          <p><b>Sqlite3</b> Es un sistema de base de datos sencillo lo cual nos ha proporcionado facilidad dado que la aplicacion no maneja grandes volumenes de datos sin embargo al ser un framework nos da la oportunidad  de migrar a cualquier gestor en cualquier momento sin problema alguno
+          </p>
+          
+          
+           
+         </div>
+         
+        
+           
+         </div>
+         
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+            </div>
+     
+            
+        </div>
+
+{%endblock verificar %}
