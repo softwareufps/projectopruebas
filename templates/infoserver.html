@@ -48,10 +48,31 @@
 {%endif%}
 
 <div>
-  {% for x in resultado %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Puertos Escaneados</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="success">
+        
+         {% for x in resultado %}
   
-  <p>{{x}}</p>
+  
+  <td>{{x}}</td>
   {% endfor %}
+      </tr>
+      
+    </tbody>
+  </table>
+
+
+
+
+ 
 
 
 </div>
