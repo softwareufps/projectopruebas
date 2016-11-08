@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{%block verificar %}
+
+   <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">Verificacion de sqli</h1>
+                        <h1 class="page-subhead-line"> </h1>
+
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+               <div class="panel panel-info">
+                        <div class="panel-heading">
+                           Verificacion de sqli
+                        </div>
+                        <div class="panel-body">
+                            <form action="/sqli/" method="post"> 
+                                        <div class="form-group">
+                                            <label>Digite url</label>
+                                            <input class="form-control" type="text" name='sqli'>
+
+                                            <p class="help-block">Se necesita inicio de sesion?</p>
+                                             <label>Url inicio de sesion</label>
+                                            <input class="form-control" type="text" name='urlsession'>
+
+
+                                             <label>Digite usuario o email</label>
+                                            <input class="form-control" type="text" name='user'>
+
+                                             <label>Digite password</label>
+                                            <input class="form-control" type="text" name='password'>
+
+
+
+                                            {% csrf_token %}
+                  <input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
+                                        </div>
+                                 
+                                  
+                                 
+                                        <button type="submit" class="btn btn-info">Verificar </button>
+
+                                    </form>
+                            </div>
+                        </div>
+                            </div>
+
+       
+             <!--/.ROW-->
+            
+
+            </div>
+            <!-- /. PAGE INNER  -->
+            {% if error %} 
+
+
+
+
+<div class="row">
+                
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                         Resultados   
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                       {% if error == "is vulnerable" %}
+             <div class="col-md-6 ">
+                      <div class="alert alert-danger text-center">
+                          <h4> No paso</h4> 
+                          <hr />
+                            <i class="fa fa-warning fa-4x"></i>
+                          <p>
+                         Url Revisada = <pre></pre>
+                        </p>
+                          <hr />
+                           <a href="#" class="btn btn-danger">Que hacer ahora</a> 
+                        </div>
+                    </div>
+                    
+
+                    {% elif error == "not vulnerable" %}
+              <div class="col-md-6 ">
+                      <div class="alert alert-success text-center">
+                          <h4> tu aplicaicon paso la prueba</h4> 
+                          <hr />
+                            <i class="fa fa-warning fa-4x"></i>
+                          <p>
+                       Felicidades
+                        </p>
+                          <hr />
+                           <a href="#" class="btn btn-success">Que hacer ahora</a> 
+                        </div>
+                    </div>
+                    {% endif%}
+                            </div>
+                            </div>
+                          </div>
+            </div>
+
+        </div>
+    {% endif %} 
+
+            
+        </div>
+
+{%endblock verificar %}

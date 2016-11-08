@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{%block verificar %}
+
+   <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">Verificacion de Servidor</h1>
+                        <h1 class="page-subhead-line"> </h1>
+
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+               <div class="panel panel-info">
+                        <div class="panel-heading">
+                           Verificacion de Servidor
+                        </div>
+                        <div class="panel-body">
+                            <form action="/server/" method="post"> 
+                                        <div class="form-group">
+                                            <label>Digite url  con el siguiente formato http://dominio.com/ o  http://sandbox1.ufps.edu.co:8080/ufps_19-proyectoAn/</label>
+                                            <input class="form-control" type="text" name='server'>
+
+
+
+
+                                            {% csrf_token %}
+                  <input type="hidden" name="csrfmiddlewaretoken" value="pHK2CZzBB323BM2Nq7DE2sxnQoBG1jPl" disabled="">
+                                        </div>
+                                 
+                                  {{error}}
+                                 
+                                        <button type="submit" class="btn btn-info">Verificar </button>
+
+                                    </form>
+                            </div>
+                        </div>
+                            </div>
+
+       
+             <!--/.ROW-->
+            
+
+            </div>
+            <!-- /. PAGE INNER  -->
+            {% if error  %} 
+
+
+
+
+<div class="row">
+                
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                         Resultados   
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                       {% if error == "is vulnerable" %}
+             <div class="col-md-6 ">
+                      <div class="alert alert-danger text-center">
+                          <h4> No paso</h4> 
+                          <hr />
+                            <i class="fa fa-warning fa-4x"></i>
+
+                            
+                            {% for key,value in resultado.items %}
+
+                          <p>
+                       el puerto:  {{key}}: 
+                        </p>
+
+                    <pre>{{value}} </pre>
+                        {%endfor%}
+                          <hr />
+                       <a href="/info" class="btn btn-danger" data-toggle = "modal" data-target = "#myModal">Que hacer ahora</a> 
+                         
+                        
+                        </div>
+                    </div>
+                    
+
+                    {% elif error == "not vulnerable" %}
+              <div class="col-md-6 ">
+                      <div class="alert alert-success text-center">
+                          <h4> tu aplicacion paso la prueba</h4> 
+                          <hr />
+                            <i class="fa fa-warning fa-4x"></i>
+                         
+   {% for key,value in resultado.items %}
+                
+
+           
+                          <p>
+                       el puerto :  {{key}} Respondio
+                        </p>
+
+
+        <pre>{{value}} </pre>
+     
+                        {%endfor%}
+
+
+                          <hr />
+                            <a href="/info" class="btn btn-danger" data-toggle = "modal" data-target = "#myModal">Que hacer ahora</a> 
+                        
+                        </div>
+                    </div>
+                    {% endif%}
+                            </div>
+                            </div>
+                          </div>
+            </div>
+
+        </div>
+    {% endif %} 
+
+
+
+<div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" 
+   aria-labelledby = "myModalLabel" aria-hidden = "true">
+   
+   <div class = "modal-dialog">
+      <div class = "modal-content">
+         
+         <div class = "modal-header">
+            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
+                  &times;
+            </button>
+            
+            <h4 class = "modal-title" id = "myModalLabel">
+             Que hacer Ahora?
+            </h4>
+         </div>
+         
+         <div class = "modal-body">
+            No te preocupes muchas aplicaciones  sufren de falta validaciones de informacion  XSS es uno de los ataques 
+            con mas hisotrias en los temas de seguridad , lo importante es poder corregir esos errores  siguiendo nuestra guia
+
+            Ahora porfavor elige una de las opciones siguientes
+            <a href="info" class="btn btn-success" >Solucionar el problema</a> 
+           
+         </div>
+         
+        
+           
+         </div>
+         
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+
+
+            
+        </div>
+
+{%endblock verificar %}
